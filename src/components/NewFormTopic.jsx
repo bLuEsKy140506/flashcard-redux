@@ -4,34 +4,32 @@ import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import ROUTES from "../app/routes";
 import { ALL_ICONS } from "../data/icons";
-import { addTopic } from "../features/topics/topicsSlice"; // ✅ Import addTopic
-// import addTopic
+import { addTopic } from "../features/topics/topicsSlice"; // ✅ import action
 
 export default function NewTopicForm() {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [icon, setIcon] = useState("");
   const navigate = useNavigate();
+
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    if (name.trim().length === 0 || icon.trim().length === 0) {
+    if (name.length === 0 || icon.length === 0) {
       return;
     }
 
-    const id = uuidv4();
+    const id = uuidv4(); // ✅ generate unique ID
 
-    // ✅ Dispatch the action to add a topic
     dispatch(
       addTopic({
         id,
         name,
-        icon
+        icon,
       })
-    );
+    ); // ✅ dispatch new topic to Redux store
 
-    // ✅ Redirect to /topics
-    navigate(ROUTES.topicsRoute());
+    navigate(ROUTES.topicsRoute()); // ✅ redirect to /topics
+  };
 
   return (
     <section>
@@ -60,9 +58,10 @@ export default function NewTopicForm() {
             ))}
           </select>
         </div>
-        <button className="center" type="submit">Add Topic</button>
+        <button className="center" type="submit">
+          Add Topic
+        </button>
       </form>
     </section>
   );
-}
 }
