@@ -1,34 +1,37 @@
 import React from "react";
-import { useSelector } from "react-redux";
-import { Link, useParams, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux"; // ✅ import useSelector
 import ROUTES from "../../app/routes";
-// import selectors
+import { selectTopics } from "./topicsSlice"; // ✅ import selector
 
-export default function Topic() {
-  const topics = {};  // replace with selector
-  const quizzes = {}; // replace with selector
-  const { topicId } = useParams();
-  const topic = topics[topicId];
 
-  if(!topic) {
-    return <Navigate to={ROUTES.topicsRoute()} replace/>
-  }
-  
-  const quizzesForTopic = topic.quizIds.map((quizId) => quizzes[quizId]);
+export default function Topics() {
+  // ✅ select topics from Redux state
+  const topics = useSelector(selectTopics);
 
   return (
-    <section>
-      <img src={topic.icon} alt="" className="topic-icon" />
-      <h1>{topic.name}</h1>
-      <ul className="quizzes-list">
-        {quizzesForTopic.map((quiz) => (
-          <li className="quiz" key={quiz.id}>
-            <Link to={ROUTES.quizRoute(quiz.id)}>{quiz.name}</Link>
+    <section className="center">
+      <h1>Topics</h1>
+      <ul className="topics-list">
+        {Object.values(topics).map((topic) => (
+          <li className="topic" key={topic.id}>
+            <Link to={ROUTES.topicRoute(topic.id)} className="topic-link">
+              <div className="topic-container">
+                <img src={topic.icon} alt="" />
+                <div className="text-content">
+                  <h2>{topic.name}</h2>
+                  <p>{topic.quizIds.length} Quizzes</p>
+                </div>
+              </div>
+            </Link>
           </li>
         ))}
       </ul>
-      <Link to="/quizzes/new" className="button center">
-        Create a New Quiz
+      <Link
+        to={ROUTES.newTopicRoute()}
+        className="button create-new-topic-button"
+      >
+        Create New Topic
       </Link>
     </section>
   );

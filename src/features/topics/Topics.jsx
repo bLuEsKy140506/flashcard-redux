@@ -1,13 +1,13 @@
-// src/features/topics/Topics.js
 import React from "react";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { selectTopics } from "./topicsSlice"; // import selector
+import { useSelector } from "react-redux"; // ✅ import useSelector
 import ROUTES from "../../app/routes";
-import '../../../index.css';
+import { selectTopics } from "./topicsSlice"; // ✅ import selector
+
 
 export default function Topics() {
-  const topics = useSelector(selectTopics); // use selector to get topics from state
+  // ✅ select topics from Redux state
+  const topics = useSelector(selectTopics);
 
   return (
     <section className="center">

@@ -1,13 +1,11 @@
 // src/features/topics/topicsSlice.js
-import { createSlice } from '@reduxjs/toolkit';
-
-const initialState = {
-  topics: {}
-};
+import { createSlice } from "@reduxjs/toolkit";
 
 const topicsSlice = createSlice({
-  name: 'topics',
-  initialState,
+  name: "topics",
+  initialState: {
+    topics: {}
+  },
   reducers: {
     addTopic: (state, action) => {
       const { id, name, icon } = action.payload;
@@ -17,13 +15,15 @@ const topicsSlice = createSlice({
         icon,
         quizIds: []
       };
+    },
+    addQuizIdToTopic: (state, action) => {
+      const { topicId, quizId } = action.payload;
+      state.topics[topicId].quizIds.push(quizId);
     }
   }
 });
 
-// Selector to get the topics object
+export const { addTopic, addQuizIdToTopic } = topicsSlice.actions;
 export const selectTopics = (state) => state.topics.topics;
 
-// Export actions and reducer
-export const { addTopic } = topicsSlice.actions;
 export default topicsSlice.reducer;

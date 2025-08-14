@@ -1,12 +1,12 @@
-// src/app/store.js
 import { configureStore } from '@reduxjs/toolkit';
-import topicsReducer from '../features/topics/topicsSlice'; // import your topics slice
+import topicsReducer from '../features/topics/topicsSlice.js';
+import quizzesReducer from '../features/quizzes/quizzesSlice';
+// import cardsReducer from '../features/cards/cardsSlice';
 
-const store = configureStore({
+export const store = configureStore({
   reducer: {
     topics: topicsReducer,
-  },
+    quizzes: quizzesReducer,
+    // cards: cardsReducer
+  }
 });
-
-export default store;
-
